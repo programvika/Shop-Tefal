@@ -75,6 +75,7 @@ const Header = observer(() => {
                     )}
             </Modal>
             <DeviceHeader/>
+            <Modal/>
         </div>
     )
 })

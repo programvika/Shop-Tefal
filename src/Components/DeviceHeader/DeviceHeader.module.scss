@@ -26,6 +26,11 @@
                 fill: white;
             }
         }
+        @media (max-width: 1024px) {
+            .percent {
+                display: none;
+            }
+        }
     }
     .x__plorer {
         cursor: pointer;
@@ -74,6 +79,11 @@
     }
     .optigrill {
         transform:translate(-10%,-50%)!important;
+    }
+}
+@media (max-width: 768px) {
+    .wrapper {
+        display: none;
     }
 }
 

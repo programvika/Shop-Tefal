@@ -1,4 +1,17 @@
+
 .wrapper {
-    margin-left: 200px;
-    margin-right: 200px;
+    margin-left: 250px;
+    margin-right: 250px;
+}
+@media (max-width: 1440px) {
+    .wrapper {
+        margin-left: 150px;
+        margin-right: 150px;
+    }
+}
+@media (max-width: 1024px) {
+    .wrapper {
+        margin-left: 25px;
+        margin-right: 25px;
+    }
 }

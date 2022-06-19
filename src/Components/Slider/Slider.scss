@@ -1,10 +1,15 @@
+
 .container-slider {
-  max-width: 700px;
-  height: 500px;
-  margin: 100px auto 0;
+  max-width: 1450px;
+  height: 400px;
+  margin: 50px auto 0;
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  @media (max-width:768px) {
+    width: 500px;
+    height: 500px;
+  }
 }
 @media screen and (max-width: 700px){
   .container-slider {
@@ -23,6 +28,7 @@
   height: 100%;
   object-fit: cover;
 }
+
 .active-anim {
   opacity: 1;
 }
@@ -73,5 +79,12 @@
   background: #f1f1f1;
 }
 .dot.active {
-  background: rgb(32, 32, 32);
+  background: red;
+}
+
+
+@media (max-width:768px) {
+  .container-slider {
+    display: none;
+  }
 }

@@ -1,12 +1,11 @@
 import React, {useState} from 'react'
-import './Slider.scss'
-import BtnSlider from './BtnSlider'
-import dataSlider from './dataSlider'
-import Slider2 from './Slider2/Slider2'
+import './Slider2.module.scss'
+import BtnSlider from './BtnSlider2'
+import dataSlider from './dataSlider2'
+import styles from './Slider2.module.scss'
 
 
-
-export default function Slider() {
+export default function Slider2() {
 
     const [slideIndex, setSlideIndex] = useState(1)
 
@@ -39,8 +38,8 @@ export default function Slider() {
     }, 1000000)
 
     return (
-        <div>
-            <div className="container-slider">
+        <div className={styles.wrapper}>
+            <div className={styles.container_slider2}>
             {dataSlider.map((obj, index) => {
                 return (
                     <div
@@ -48,7 +47,7 @@ export default function Slider() {
                     className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
                     >
                         <img 
-                        src={process.env.PUBLIC_URL + `slider/slide${index + 1}.png`} 
+                        src={process.env.PUBLIC_URL + `slider/small/small${index + 1}.png`} 
                         />
                     </div>
                 )
@@ -64,10 +63,8 @@ export default function Slider() {
                     ></div>
                 ))}
             </div>
-            </div>
-            <div className='slider2'>
-                <Slider2/>
-            </div>
         </div>
+        </div>
+        
     )
 }
