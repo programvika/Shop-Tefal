@@ -1,4 +1,5 @@
-.wrapper {
+.wrapperAuth {
+    z-index: 5;
     height: 100%;
     width: 100%;
     background-color: rgba(0,0,0, 0.4);
@@ -9,19 +10,124 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    transform: scale(1);
-    .modal {
+    transform: scale(0);
+    .modalAuth {
         padding: 20px;
         border-radius: 12px;
         background-color: white;
         display: flex;
         flex-direction: column;
     }
+
+    .auth {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        .btns {
+            display: flex;
+            justify-content: center;
+            .login {
+                cursor: pointer;
+                color: grey;
+                margin-right: 10px;
+                height: 50px;
+                padding: 0 10px;
+                background-color: white;
+                border: none;
+                border-radius: 13px; 
+            }
+            .registr {
+                cursor: pointer;
+                color: grey;
+                margin-right: 10px;
+                height: 50px;
+                padding: 0 10px;
+                background-color: white;
+                border: none;
+                border-radius: 13px; 
+            }
+            .active {
+                color: white;
+                background-color: red;
+            }
+        }
+        .reg {
+            .title {
+                font-size: 30px;
+                margin: 25px 0;
+                font-family: DINPro;
+                line-height: 1.5;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+            .inputs {
+                p {
+                    font-family: DINPro;
+                    font-weight: 400;
+                    line-height: 1.5;
+                    font-size: 20px;
+                    margin-bottom: 5px;
+                }
+                input {
+                    padding: 10px;
+                    height: 30px;
+                    border: 1px solid gray;
+                    border-radius: 10px;
+                }
+            }
+            button {
+                cursor: pointer;
+                color: grey;
+                padding: 20px;
+                border-radius: 12px;
+                margin-top: 20px;
+                border: 1px solid grey;
+                &:active {
+                    background-color: red;
+                    color: white;
+                }
+            }
+        }
+        .log {
+            .title {
+                font-size: 30px;
+                margin: 25px 0;
+                font-family: DINPro;
+                line-height: 1.5;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+            .data {
+                p {
+                    font-family: DINPro;
+                    font-weight: 400;
+                    line-height: 1.5;
+                    font-size: 20px;
+                    margin-bottom: 5px;
+                }
+                input {
+                    padding: 10px;
+                    height: 30px;
+                    border: 1px solid gray;
+                    border-radius: 10px;
+                }
+            }
+            button {
+                cursor: pointer;
+                color: grey;
+                padding: 20px;
+                border-radius: 12px;
+                margin-top: 20px;
+                border: 1px solid grey;
+                &:active {
+                    background-color: red;
+                    color: white;
+                }
+            }
+        }
+    }
 }
-.auth_loyalty{
-    display: flex;
-    justify-content: space-around;
-}
-.active {
+
+.activeAuth {
     transform: scale(1);
 }

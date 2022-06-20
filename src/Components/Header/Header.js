@@ -12,11 +12,13 @@ import phone from '../../img/phone.svg'
 import { Context } from '../..'
 import { observer } from 'mobx-react-lite'
 import close from '../../img/close.png'
-import DeviceHeader from '../../Components/DeviceHeader/DeviceHeader'
+import Auth from '../Auth/Auth'
+
 
 
 const Header = observer(() => {
     const [modalActive, setModalActive] = useState(false)
+    const [modalActiveAuth, setModalActiveAuth] = useState(false)
     const {device} = useContext(Context)
 
     return (
@@ -28,7 +30,7 @@ const Header = observer(() => {
                             {modalActive ? <img className={styles.close} src={close} alt="" /> : <img src={catalog} alt="catalog" />}
                             <p>Каталог</p>
                         </button>
-                        <input></input>
+                        <input placeholder='search..'/>
                     </div>
                     <div className={styles.phone}>
                         <p>8 (800) 600-27-59</p>
@@ -48,10 +50,10 @@ const Header = observer(() => {
                         <img src={search} alt="search" />
                         <p>Поиск</p>
                     </div>
-                    <div className={styles.entrance}>
+                    <button onClick={() => setModalActiveAuth(true)} className={styles.entrance}>
                         <img src={entrance} alt="entrance" />
                         <p>Войти</p>
-                    </div>
+                    </button>
                     <div className={styles.compare}>
                         <img src={compare} alt="compare" />
                         <p>Сравнить</p>
@@ -74,8 +76,7 @@ const Header = observer(() => {
                         </div>
                     )}
             </Modal>
-            <DeviceHeader/>
-            <Modal/>
+            <Auth className={styles.modalAuth} active={modalActiveAuth} setActive={setModalActiveAuth}/>
         </div>
     )
 })
