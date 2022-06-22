@@ -1,9 +1,17 @@
 import React, { useState } from 'react'
 import styles from './Auth.module.scss'
+import { useDispatch } from 'react-redux'
+import {setUser} from '../../store/slices/userSlice'
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import {useNavigate} from 'react-router-dom'
 
     const Auth = ({active, setActive, children}) => {
+        const dispatch = useDispatch();
         const [login, setLogin] = useState(true)
         const [registr, setRegistr] = useState(false)
+        const [email, setEmail] = useState('')
+        const [pass, setPass] = useState('')
+        const navigate = useNavigate()
 
         const loginClick = () => {
             setLogin(true)
@@ -15,58 +23,95 @@ import styles from './Auth.module.scss'
             setLogin(false)
         }
 
+        const handleLogin = (email, password) => {
+            const auth = getAuth();
+            signInWithEmailAndPassword(auth, email, password)
+                .then(({user}) => {
+                    console.log(user);
+                    dispatch(setUser({
+                        email: user.email,
+                        id: user.uid,
+                        token: user.accessToken,
+                    }));
+                    navigate('/shop');
+                })
+                .catch(() => alert('Invalid user!'))
+        }
+
+        const handleRegister = (email, password) => {
+            const auth = getAuth();
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(({user}) => {
+                    console.log(user);
+                    dispatch(setUser({
+                        email: user.email,
+                        id: user.uid,
+                        token: user.accessToken,
+                    }));
+                    navigate('/shop');
+                })
+                .catch(console.error)
+        }
+
+
+
     return (
-        <div onClick={() => setActive(false)} className={`${styles.wrapperAuth} ${active ? styles.activeAuth : ''}`}>
+        <div
+            onClick={() => setActive(false)} className={`${styles.wrapperAuth} ${active ? styles.activeAuth : ''}`}>
             <div onClick={e => e.stopPropagation()} className={styles.modalAuth}>
                 <div className={styles.auth}>
                     <div className={styles.btns}>
-                        <button onClick={() => loginClick()} className={`${styles.login} ${login ? styles.active : ''}`}>Вход</button>
-                        <button onClick={() => registrClick()} className={`${styles.registr} ${registr ? styles.active : ''}`}>Регистрация</button>
+                        <button onClick={loginClick} className={`${styles.login} ${login ? styles.active : ''}`}>Вход</button>
+                        <button onClick={registrClick} className={`${styles.registr} ${registr ? styles.active : ''}`}>Регистрация</button>
                     </div>
                     {registr ?
-                        <div className={styles.reg}>
-                            <div className={styles.title}><p>Создать личный кабинет Tefal</p></div>
-                            <div className={styles.inputs}>
-                                <div>
-                                    <p>Имя</p>
-                                    <input placeholder='Имя..'/>
+                        <form
+                            className={styles.reg}>
+                                <div className={styles.title}><p>Создать личный кабинет Tefal</p></div>
+                                <div className={styles.inputs}>
+                                    <div>
+                                        <p>Адрес электронной почты</p>
+                                        <input
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            type='email'
+                                            value={email}
+                                            placeholder='Почта..'/> 
+                                    </div>
+                                    <div>
+                                        <p>Пароль</p>
+                                        <input
+                                            onChange={(e) => setPass(e.target.value)}
+                                            type='password'
+                                            value={pass}
+                                            placeholder='Пароль..'/>
+                                    </div>  
                                 </div>
-                                <div>
-                                    <p>Фамилия</p>
-                                    <input placeholder='Фамилия..'/>
-                                </div>
-                                <div>
-                                    <p>Телефон</p>
-                                    <input placeholder='Телефон..'/>
-                                </div>
-                                <div>
-                                    <p>Адрес электронной почты</p>
-                                    <input placeholder='Почта..'/> 
-                                </div>
-                                <div>
-                                    <p>Пароль</p>
-                                    <input placeholder='Пароль..'/>
-                                </div>
-                            </div>
-                            <button>Зарегистрироваться</button>
-                        </div>
+                                <button onClick={() => handleRegister(email, pass)}>Зарегистрироваться</button>
+                        </form>
                         :
-                        <div className={styles.log}>
+                        <form className={styles.log}>
                             <div className={styles.title}>Войти в личный кабинет Tefal</div>
                             <div className={styles.data}>
                                 <div>
                                     <p>Email</p>
-                                    <input placeholder='email..'/>
+                                    <input
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        type='email'
+                                        value={email}
+                                        placeholder='email..'/>
                                 </div>
                                 <div>
                                     <p>Пароль</p>
-                                    <input placeholder='password..'/>
+                                    <input
+                                        onChange={(e) => setPass(e.target.value)}
+                                        type='password'
+                                        value={pass}
+                                        placeholder='password..'/>
                                 </div>
-                                <button>Войти</button>
+                                <button onClick={() => handleLogin(email, pass)}>Войти</button>
                             </div>
-                        </div>
+                        </form>
                     }
-
                 </div>
             </div>
         </div>

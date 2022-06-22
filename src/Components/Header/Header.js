@@ -52,7 +52,11 @@ const Header = observer(() => {
                     </div>
                     <button onClick={() => setModalActiveAuth(true)} className={styles.entrance}>
                         <img src={entrance} alt="entrance" />
-                        <p>Войти</p>
+                        {isAuth ?
+                            <p>Выйти</p>
+                        :   
+                            <p>Войти</p>
+                        }
                     </button>
                     <div className={styles.compare}>
                         <img src={compare} alt="compare" />
