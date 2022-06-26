@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import logo from '../../img/logo.svg'
 import search from '../../img/search.png'
 import entrance from '../../img/go.png'
@@ -9,17 +9,30 @@ import catalog from '../../img/catalog.png'
 import styles from './Header.module.scss'
 import Modal from '../../Components/Modal/Modal'
 import phone from '../../img/phone.svg'
-import { Context } from '../..'
-import { observer } from 'mobx-react-lite'
 import close from '../../img/close.png'
 import Auth from '../Auth/Auth'
+import { useNavigate } from 'react-router-dom'
+import { BASKET_ROUTE, FAVORITES_ROUTE, SHOP_ROUTE } from '../../utils/consts'
+import { AuthContext } from '../../store/AuthContext/AuthContext'
+import logOutImg from '../../img/log-out.svg'
+import axios from 'axios'
 
 
-
-const Header = observer(() => {
+const Header = () => {
     const [modalActive, setModalActive] = useState(false)
     const [modalActiveAuth, setModalActiveAuth] = useState(false)
-    const {device} = useContext(Context)
+    const nav = useNavigate()
+    const {currentUser} = useContext(AuthContext)
+    const [type, setType] = useState([])
+
+    useEffect(() => {
+        return axios.get('https://62b85a30f4cb8d63df5c5dd2.mockapi.io/type')
+        .then(response => {
+            setType(response.data)
+        })
+        .catch((err) => console.log(err))
+    }, [])
+
 
     return (
         <div className={styles.wrapper}>
@@ -38,9 +51,9 @@ const Header = observer(() => {
                     </div>
                 </div>
                 <div className={styles.center}>
-                    <div>
+                    <button onClick={() => nav(SHOP_ROUTE)}>
                         <img src={logo} alt="logo" />
-                    </div>
+                    </button>
                     <div className={styles.center__logo}>
                         <img src={phone} alt="" />
                     </div>
@@ -50,39 +63,49 @@ const Header = observer(() => {
                         <img src={search} alt="search" />
                         <p>Поиск</p>
                     </div>
-                    <button onClick={() => setModalActiveAuth(true)} className={styles.entrance}>
-                        <img src={entrance} alt="entrance" />
-                        {isAuth ?
-                            <p>Выйти</p>
-                        :   
+                    {currentUser ?
+                        <button onClick={() => setModalActiveAuth(true)} className={styles.entrance}>
+                            <img src={logOutImg} alt="entrance" />
+                            <p>Админ панель</p>
+                        </button>
+                    :
+                        <button onClick={() => setModalActiveAuth(true)} className={styles.entrance}>
+                            <img src={entrance} alt="entrance" />
                             <p>Войти</p>
-                        }
-                    </button>
+                        </button>
+                    }
                     <div className={styles.compare}>
                         <img src={compare} alt="compare" />
                         <p>Сравнить</p>
                     </div>
-                    <div className={styles.favorites}>
-                        <img src={favorites} alt="favorites" />
-                        <p>Избранное</p>
-                    </div>
-                    <div className={styles.basket}>
+                    <button
+                        onClick={() => nav(FAVORITES_ROUTE)}
+                        className={styles.favorites}>
+                            <img src={favorites} alt="favorites" />
+                            <p>Избранное</p>
+                    </button>
+                    <div
+                        onClick={() => nav(BASKET_ROUTE)}
+                        className={styles.basket}>
                         <img src={basket} alt="basket" />
                     </div>
                 </div>
             </div>
             <Modal className={styles.modal} active={modalActive} setActive={setModalActive}>
-                {device.types.map(device => 
+                
+                {type.map(device => 
                         <div
                             className={styles.device}
-                            key={device.id}>
-                                <div className={styles.types}>{device.name}</div>
+                            key={device.id}
+                            onClick={() => setModalActive(false)}
+                            >
+                                <div className={styles.types} onClick={() => nav(device.nav)}>{device.name}</div>
                         </div>
                     )}
             </Modal>
             <Auth className={styles.modalAuth} active={modalActiveAuth} setActive={setModalActiveAuth}/>
         </div>
     )
-})
+}
 
 export default Header

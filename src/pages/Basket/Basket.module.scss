@@ -1,0 +1,57 @@
+.wrapper {
+    text-align: center;
+    .all {
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    .table {
+        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 200px);
+        grid-gap: 20px;
+        .card {
+            border: 1px solid red;
+            border-radius: 12px;
+            color: rgb(99, 99, 99);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 12px;
+            text-align: center;
+            padding: 5px;
+            img {
+                width: 140px;
+                height: 140px;
+            }
+            .title {
+                margin-top: 70px;
+
+                p {
+                    font-size: 30px;
+                }
+            }
+            .btn{
+                margin-top: 10px;
+                display: grid;
+                grid-gap: 10px;
+                grid-template-columns: 1fr 1fr 1fr;
+                button {
+                    cursor: pointer;
+                    font-size: 12px;
+                    padding: 2px;
+                    background-color: red;
+                    border: none;
+                    color: white;
+                    border-radius: 10px;
+                }
+            }
+        }
+    }
+    .totalPrice {
+        margin-top: 30px;
+        font-weight: bold;
+        font-size: 20px;
+    }
+}
