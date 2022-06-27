@@ -26,11 +26,14 @@ const Header = () => {
     const [type, setType] = useState([])
 
     useEffect(() => {
-        return axios.get('https://62b85a30f4cb8d63df5c5dd2.mockapi.io/type')
-        .then(response => {
-            setType(response.data)
-        })
-        .catch((err) => console.log(err))
+        const getTypes = async() => {
+            await axios.get('https://62b85a30f4cb8d63df5c5dd2.mockapi.io/type')
+            .then(response => {
+                setType(response.data)
+            })
+            .catch((err) => console.log(err))
+        }
+        getTypes()
     }, [])
 
 

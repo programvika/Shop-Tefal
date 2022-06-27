@@ -48,6 +48,7 @@ export default class DeviceStore {
         this._coffeeMachines = [
             {name: "Набор техники Инновационные помощники L Tefal", price: 207090, img: `https://shop.tefal.ru/sites/default/files/products/product_3468_18.jpg`, id: 1},
         ]
+        this._select = ''
 
         makeAutoObservable(this)
     }
@@ -60,11 +61,19 @@ export default class DeviceStore {
             this._dishes = dishes
         }
 
+        setSelect(select) {
+            this._select = select
+        }
+
         get types() {
             return this._types
         }
 
         get dishes() {
             return this._dishes
+        }
+
+        get select() {
+            return this._select
         }
 }
